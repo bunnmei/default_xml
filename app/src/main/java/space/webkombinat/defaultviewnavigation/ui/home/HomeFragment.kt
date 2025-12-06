@@ -22,6 +22,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        println("HomeFragment")
         val homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
 
