@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import space.webkombinat.defaultviewnavigation.databinding.FragmentDashboardBinding
+import space.webkombinat.defaultviewnavigation.jetpack.ReText
 
 class DashboardFragment : Fragment() {
 
@@ -26,12 +28,18 @@ class DashboardFragment : Fragment() {
             ViewModelProvider(this).get(DashboardViewModel::class.java)
 
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+            .apply {
+                composeView.setContent {
+                    ReText()
+                }
+            }
         val root: View = binding.root
 
         val textView: TextView = binding.textDashboard
         dashboardViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
+
 
         var rotated = false
 
@@ -67,14 +75,19 @@ class DashboardFragment : Fragment() {
                     .start()
             }
         }
-
-
-
-
-
         return root
     }
 
+//    override fun onCreateView(
+//        inflater: LayoutInflater,
+//        container: ViewGroup?,
+//        savedInstanceState: Bundle?
+//    ): View = ComposeView(requireContext()).apply {
+//        setContent {
+//            MyComposeScreen()
+//        }
+//    }
+//
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
